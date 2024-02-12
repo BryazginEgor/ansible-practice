@@ -8,6 +8,7 @@
           - software-properties-common
           - ca-certificates
           - apt-transport-https
+          - python3-pip
         update_cache: true
         state: present
 
@@ -43,6 +44,13 @@
         name: docker-compose-plugin
         state: present
   become: true
+
+- name: Настройка дополнительных пакетов python
+  block:
+    - name: Установка pip пакетов
+      pip:
+        name: docker
+        state: present
 
 - name: Завершение загрузки
   block:
