@@ -1,0 +1,56 @@
+---
+- name: Docker install
+  block:
+    - name: Установка дополнительных пакетов
+      ansible.builtin.apt:
+        pkg:
+          - curl
+          - software-properties-common
+          - ca-certificates
+          - apt-transport-https
+        update_cache: true
+        state: present
+
+    - name: Добавление ключа Docker
+      ansible.builtin.apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        keyring: /usr/share/keyrings/docker-archive-keyring.gpg
+        state: present
+
+    - name: Установка репозитория Docker
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg]
+          https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+
+    - name: Установка Docker-ce
+      ansible.builtin.apt:
+        name: docker-ce
+        state: present
+        update_cache: true
+
+    - name: Проверка Docker
+      ansible.builtin.service:
+        name: docker
+        state: restarted
+        enabled: true
+  become: true
+
+- name: Docker-compose install
+  block:
+    - name: Install Docker-compose
+      ansible.builtin.apt:
+        name: docker-compose-plugin
+        state: present
+  become: true
+
+- name: Завершение загрузки
+  block:
+    - name: Добавление пользователя в группу docker
+      ansible.builtin.user:
+        name: "{{ ansible_user }}"
+        group: docker
+        append: true
+    - name: Перезагрузка
+      ansible.builtin.reboot:
+  become: true
