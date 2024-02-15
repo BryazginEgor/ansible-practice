@@ -48,7 +48,7 @@
 - name: Настройка дополнительных пакетов python
   block:
     - name: Установка pip пакетов
-      pip:
+      ansible.builtin.pip:
         name: docker
         state: present
 

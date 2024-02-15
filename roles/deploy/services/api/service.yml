@@ -1,0 +1,19 @@
+---
+- name: "[{{ name }}] Конфигурация секрета"
+  ansible.builtin.include_tasks: "../secret.yml"
+
+- name: "[{{ name }}] Выкладка сервиса"
+  block:
+    - name: "[{{ name }}] Выкладка сервиса" 
+      community.docker.docker_swarm_service:
+        name: "{{ name }}"
+        image: "localhost:5000/{{ name }}:latest"
+        networks: 
+          - name: "{{ networkName }}"
+        publish:
+          - mode: ingress
+            published_port: 3002
+            target_port: 3000
+        secrets:
+          - secret_name: "{{ name }}.env"
+            filename: /opt/app/.env

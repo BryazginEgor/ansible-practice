@@ -1,2 +1,6 @@
 ---
 # vars file for deploy
+services:
+  - api
+
+networkName: app_network
