@@ -1,5 +1,4 @@
 ---
-rmq: 
+rmq:
   user: admin
   password: admin
-

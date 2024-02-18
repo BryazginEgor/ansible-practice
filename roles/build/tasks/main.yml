@@ -17,6 +17,6 @@
   loop: "{{ services | difference(non_build_services) }}"
 
 - name: Удаляем репозиторий
-  file:
-    path: "{{ get_folder }}"
+  ansible.builtin.file:
+    path: "{{ git_folder }}"
     state: absent

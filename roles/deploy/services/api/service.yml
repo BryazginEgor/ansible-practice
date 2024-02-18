@@ -4,12 +4,12 @@
 
 - name: "[{{ name }}] Выкладка сервиса"
   block:
-    - name: "[{{ name }}] Выкладка сервиса" 
+    - name: "[{{ name }}] Выкладка сервиса"
       community.docker.docker_swarm_service:
         name: "{{ name }}"
         image: "{{ registry_name }}{{ name }}:{{ version }}"
-        networks: 
-          - name: "{{ networkName }}"
+        networks:
+          - name: "{{ network_name }}"
         publish:
           - mode: ingress
             published_port: 3002
