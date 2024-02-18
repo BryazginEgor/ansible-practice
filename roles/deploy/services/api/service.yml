@@ -7,7 +7,7 @@
     - name: "[{{ name }}] Выкладка сервиса" 
       community.docker.docker_swarm_service:
         name: "{{ name }}"
-        image: "localhost:5000/{{ name }}:latest"
+        image: "{{ registry_name }}{{ name }}:{{ version }}"
         networks: 
           - name: "{{ networkName }}"
         publish:
@@ -17,3 +17,4 @@
         secrets:
           - secret_name: "{{ name }}.env"
             filename: /opt/app/.env
+  tags: "{{ name }}"
