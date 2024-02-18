@@ -27,3 +27,7 @@ non_build_services:
 
 versions:
   - latest
+
+configs:
+  converter:
+    queue: q_imageProcessor
