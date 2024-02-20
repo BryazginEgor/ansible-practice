@@ -8,6 +8,7 @@
       community.docker.docker_swarm_service:
         name: "{{ name }}"
         image: "{{ registry_name }}{{ name }}:{{ version }}"
+        force_update: true
         networks:
           - name: "{{ network_name }}"
         publish:

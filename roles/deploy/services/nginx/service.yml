@@ -1,0 +1,24 @@
+---
+- name: "[{{ name }}] Конфигурация конфига"
+  ansible.builtin.include_tasks: "../config.yml"
+  loop:
+    - nginx.conf
+  loop_control:
+    loop_var: config_item
+
+- name: "[{{ name }}] Выкладка сервиса"
+  block:
+    - name: "[{{ name }}] Выкладка сервиса"
+      community.docker.docker_swarm_service:
+        name: "{{ name }}"
+        image: "nginx:{{ version }}"
+        networks:
+          - name: "{{ network_name }}"
+        publish:
+          - mode: ingress
+            published_port: 80
+            target_port: 80
+        configs:
+          - config_name: nginx.conf
+            filename: "/etc/nginx/nginx.conf"
+  tags: "{{ name }}"
