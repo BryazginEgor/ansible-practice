@@ -35,3 +35,5 @@ versions:
 configs:
   converter:
     queue: q_imageProcessor
+
+advertise_addr: 10.11.10.1

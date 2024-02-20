@@ -1,0 +1,8 @@
+---
+- name: Подключение
+  vars:
+    token: "{{ lookup('file', '../../tokens/token-{{ type }}' )}}"
+  community.docker.docker_swarm:
+    state: join
+    join_token: "{{ token }}"
+    remote_addrs: "{{ advertise_addr }}"
